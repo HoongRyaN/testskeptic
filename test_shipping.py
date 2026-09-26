@@ -1,0 +1,11 @@
+import unittest
+
+from shipping import shipping_fee
+
+
+class TestShippingFee(unittest.TestCase):
+    def test_small_order(self):
+        self.assertEqual(shipping_fee(50), 10)
+
+    def test_large_order(self):
+        self.assertEqual(shipping_fee(150), 0)
