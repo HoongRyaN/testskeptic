@@ -9,3 +9,6 @@ class TestShippingFee(unittest.TestCase):
 
     def test_large_order(self):
         self.assertEqual(shipping_fee(150), 0)
+
+    def test_exact_threshold(self):
+        self.assertEqual(shipping_fee(100), 0)
