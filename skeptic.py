@@ -6,12 +6,29 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import argparse
 
 
 ROOT = Path(__file__).resolve().parent
 
+parser = argparse.ArgumentParser(description="Check tests with controlled mutations.")
+parser.add_argument(
+    "--suite",
+    choices=["before", "after"],
+    default="after",
+    help="Choose the before or after test suite.",
+)
+args = parser.parse_args()
 
-def run_tests(folder):
+if args.suite == "before":
+    test_module = "demo_before"
+else:
+    test_module = "test_shipping"
+
+test_filename = f"{test_module}.py"
+
+
+def run_tests(folder, module_name):
     command = [
         sys.executable,
         "-X",
@@ -20,7 +37,7 @@ def run_tests(folder):
         "-m",
         "unittest",
         "-v",
-        "test_shipping",
+        module_name,
     ]
 
     try:
@@ -52,7 +69,8 @@ def run_tests(folder):
 
 
 print("Checking the original tests...")
-baseline, baseline_output = run_tests(ROOT)
+print("Selected suite:", args.suite)
+baseline, baseline_output = run_tests(ROOT, test_module)
 print("Baseline result:", baseline)
 
 if baseline != "PASS":
@@ -93,12 +111,12 @@ for mutation in mutations:
     else:
         with tempfile.TemporaryDirectory(prefix="testskeptic-") as temporary:
             folder = Path(temporary)
-            shutil.copy2(ROOT / "test_shipping.py", folder / "test_shipping.py")
+            shutil.copy2(ROOT / test_filename, folder / test_filename)
 
             mutated = source.replace(original, replacement, 1)
             (folder / "shipping.py").write_text(mutated, encoding="utf-8")
 
-            status, mutation_output = run_tests(folder)
+            status, mutation_output = run_tests(folder, test_module)
 
     verdict = {
         "PASS": "SURVIVED",
@@ -153,6 +171,8 @@ report = f"""<!doctype html>
 <body style="font-family: sans-serif; max-width: 960px; margin: 40px auto; padding: 0 20px; line-height: 1.6;">
     <h1>TestSkeptic</h1>
     <p>Controlled mutation test report</p>
+    <p>Selected suite: <strong>{escape(args.suite)}</strong></p>
+    <p>Test file: <code>{escape(test_filename)}</code></p>
     <p>Generated: {escape(generated_at)}</p>
 
     <h2>Summary</h2>
@@ -177,6 +197,6 @@ report = f"""<!doctype html>
 </html>
 """
 
-report_path = ROOT / "report.html"
+report_path = ROOT / f"report-{args.suite}.html"
 report_path.write_text(report, encoding="utf-8")
 print("Report saved to:", report_path)

@@ -15,7 +15,9 @@
 <body style="font-family: sans-serif; max-width: 960px; margin: 40px auto; padding: 0 20px; line-height: 1.6;">
     <h1>TestSkeptic</h1>
     <p>Controlled mutation test report</p>
-    <p>Generated: 2026-09-27T13:49:32+09:00</p>
+    <p>Selected suite: <strong>after</strong></p>
+    <p>Test file: <code>test_shipping.py</code></p>
+    <p>Generated: 2026-09-27T14:29:09+09:00</p>
 
     <h2>Summary</h2>
     <p>Original test status: <strong>PASS</strong></p>
@@ -54,7 +56,7 @@ test_small_order (test_shipping.TestShippingFee.test_small_order) ... ok
 FAIL: test_exact_threshold (test_shipping.TestShippingFee.test_exact_threshold)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-_ajpl2vm\test_shipping.py&quot;, line 14, in test_exact_threshold
+  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-1kr63b73\test_shipping.py&quot;, line 14, in test_exact_threshold
     self.assertEqual(shipping_fee(100), 0)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 10 != 0
@@ -82,7 +84,7 @@ test_small_order (test_shipping.TestShippingFee.test_small_order) ... ok
 FAIL: test_just_below_threshold (test_shipping.TestShippingFee.test_just_below_threshold)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-3rzinb1j\test_shipping.py&quot;, line 17, in test_just_below_threshold
+  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-ufs7llu9\test_shipping.py&quot;, line 17, in test_just_below_threshold
     self.assertEqual(shipping_fee(99), 10)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 10
@@ -110,7 +112,7 @@ test_small_order (test_shipping.TestShippingFee.test_small_order) ... FAIL
 FAIL: test_just_below_threshold (test_shipping.TestShippingFee.test_just_below_threshold)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-a39a4zqw\test_shipping.py&quot;, line 17, in test_just_below_threshold
+  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-8tg0y2xz\test_shipping.py&quot;, line 17, in test_just_below_threshold
     self.assertEqual(shipping_fee(99), 10)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 10
@@ -119,7 +121,7 @@ AssertionError: 0 != 10
 FAIL: test_small_order (test_shipping.TestShippingFee.test_small_order)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-a39a4zqw\test_shipping.py&quot;, line 8, in test_small_order
+  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-8tg0y2xz\test_shipping.py&quot;, line 8, in test_small_order
     self.assertEqual(shipping_fee(50), 10)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 10

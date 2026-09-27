@@ -15,7 +15,9 @@
 <body style="font-family: sans-serif; max-width: 960px; margin: 40px auto; padding: 0 20px; line-height: 1.6;">
     <h1>TestSkeptic</h1>
     <p>Controlled mutation test report</p>
-    <p>Generated: 2026-09-27T13:22:18+09:00</p>
+    <p>Selected suite: <strong>before</strong></p>
+    <p>Test file: <code>demo_before.py</code></p>
+    <p>Generated: 2026-09-27T14:28:19+09:00</p>
 
     <h2>Summary</h2>
     <p>Original test status: <strong>PASS</strong></p>
@@ -27,9 +29,9 @@
     </ul>
 
     <h2>Original test run</h2>
-    <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">test_exact_threshold (test_shipping.TestShippingFee.test_exact_threshold) ... ok
-test_large_order (test_shipping.TestShippingFee.test_large_order) ... ok
-test_small_order (test_shipping.TestShippingFee.test_small_order) ... ok
+    <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">test_exact_threshold (demo_before.TestShippingFee.test_exact_threshold) ... ok
+test_large_order (demo_before.TestShippingFee.test_large_order) ... ok
+test_small_order (demo_before.TestShippingFee.test_small_order) ... ok
 
 ----------------------------------------------------------------------
 Ran 3 tests in 0.000s
@@ -44,15 +46,15 @@ OK
         <p>Mutated: <code>subtotal &gt; 100</code></p>
         <details>
             <summary>View test output</summary>
-            <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">test_exact_threshold (test_shipping.TestShippingFee.test_exact_threshold) ... FAIL
-test_large_order (test_shipping.TestShippingFee.test_large_order) ... ok
-test_small_order (test_shipping.TestShippingFee.test_small_order) ... ok
+            <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">test_exact_threshold (demo_before.TestShippingFee.test_exact_threshold) ... FAIL
+test_large_order (demo_before.TestShippingFee.test_large_order) ... ok
+test_small_order (demo_before.TestShippingFee.test_small_order) ... ok
 
 ======================================================================
-FAIL: test_exact_threshold (test_shipping.TestShippingFee.test_exact_threshold)
+FAIL: test_exact_threshold (demo_before.TestShippingFee.test_exact_threshold)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-wup66a9l\test_shipping.py&quot;, line 14, in test_exact_threshold
+  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-s0x5ield\demo_before.py&quot;, line 15, in test_exact_threshold
     self.assertEqual(shipping_fee(100), 0)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 10 != 0
@@ -71,9 +73,9 @@ FAILED (failures=1)
         <p>Mutated: <code>subtotal &gt;= 99</code></p>
         <details>
             <summary>View test output</summary>
-            <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">test_exact_threshold (test_shipping.TestShippingFee.test_exact_threshold) ... ok
-test_large_order (test_shipping.TestShippingFee.test_large_order) ... ok
-test_small_order (test_shipping.TestShippingFee.test_small_order) ... ok
+            <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">test_exact_threshold (demo_before.TestShippingFee.test_exact_threshold) ... ok
+test_large_order (demo_before.TestShippingFee.test_large_order) ... ok
+test_small_order (demo_before.TestShippingFee.test_small_order) ... ok
 
 ----------------------------------------------------------------------
 Ran 3 tests in 0.000s
@@ -89,15 +91,15 @@ OK
         <p>Mutated: <code>return 0</code></p>
         <details>
             <summary>View test output</summary>
-            <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">test_exact_threshold (test_shipping.TestShippingFee.test_exact_threshold) ... ok
-test_large_order (test_shipping.TestShippingFee.test_large_order) ... ok
-test_small_order (test_shipping.TestShippingFee.test_small_order) ... FAIL
+            <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">test_exact_threshold (demo_before.TestShippingFee.test_exact_threshold) ... ok
+test_large_order (demo_before.TestShippingFee.test_large_order) ... ok
+test_small_order (demo_before.TestShippingFee.test_small_order) ... FAIL
 
 ======================================================================
-FAIL: test_small_order (test_shipping.TestShippingFee.test_small_order)
+FAIL: test_small_order (demo_before.TestShippingFee.test_small_order)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-73vcuqkp\test_shipping.py&quot;, line 8, in test_small_order
+  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-as2bju0n\demo_before.py&quot;, line 9, in test_small_order
     self.assertEqual(shipping_fee(50), 10)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: 0 != 10

@@ -220,3 +220,6 @@ __marimo__/
 .vscode/
 
 /report.html
+/report-*.html
+
+/work/
