@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TestSkeptic Report</title>
+    <style>
+        body { font-family: sans-serif; }
+        pre { white-space: pre-wrap; }
+        .pass { color: green; }
+        .fail { color: red; }
+        .error { color: orange; }
+    </style>
+</head>
+<body style="font-family: sans-serif; max-width: 960px; margin: 40px auto; padding: 0 20px; line-height: 1.6;">
+    <h1>TestSkeptic</h1>
+    <p>Controlled mutation test report</p>
+    <p>Generated: 2026-09-27T13:49:32+09:00</p>
+
+    <h2>Summary</h2>
+    <p>Original test status: <strong>PASS</strong></p>
+    <ul>
+        <li>Total mutations: 3</li>
+        <li>KILLED: 3</li>
+        <li>SURVIVED: 0</li>
+        <li>INVALID: 0</li>
+    </ul>
+
+    <h2>Original test run</h2>
+    <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">test_exact_threshold (test_shipping.TestShippingFee.test_exact_threshold) ... ok
+test_just_below_threshold (test_shipping.TestShippingFee.test_just_below_threshold) ... ok
+test_large_order (test_shipping.TestShippingFee.test_large_order) ... ok
+test_small_order (test_shipping.TestShippingFee.test_small_order) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK
+</pre>
+
+    
+    <section>
+        <h2>M01: KILLED</h2>
+        <p>Original: <code>subtotal &gt;= 100</code></p>
+        <p>Mutated: <code>subtotal &gt; 100</code></p>
+        <details>
+            <summary>View test output</summary>
+            <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">test_exact_threshold (test_shipping.TestShippingFee.test_exact_threshold) ... FAIL
+test_just_below_threshold (test_shipping.TestShippingFee.test_just_below_threshold) ... ok
+test_large_order (test_shipping.TestShippingFee.test_large_order) ... ok
+test_small_order (test_shipping.TestShippingFee.test_small_order) ... ok
+
+======================================================================
+FAIL: test_exact_threshold (test_shipping.TestShippingFee.test_exact_threshold)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-_ajpl2vm\test_shipping.py&quot;, line 14, in test_exact_threshold
+    self.assertEqual(shipping_fee(100), 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 10 != 0
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=1)
+</pre>
+        </details>
+    </section>
+    
+    <section>
+        <h2>M02: KILLED</h2>
+        <p>Original: <code>subtotal &gt;= 100</code></p>
+        <p>Mutated: <code>subtotal &gt;= 99</code></p>
+        <details>
+            <summary>View test output</summary>
+            <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">test_exact_threshold (test_shipping.TestShippingFee.test_exact_threshold) ... ok
+test_just_below_threshold (test_shipping.TestShippingFee.test_just_below_threshold) ... FAIL
+test_large_order (test_shipping.TestShippingFee.test_large_order) ... ok
+test_small_order (test_shipping.TestShippingFee.test_small_order) ... ok
+
+======================================================================
+FAIL: test_just_below_threshold (test_shipping.TestShippingFee.test_just_below_threshold)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-3rzinb1j\test_shipping.py&quot;, line 17, in test_just_below_threshold
+    self.assertEqual(shipping_fee(99), 10)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 10
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=1)
+</pre>
+        </details>
+    </section>
+    
+    <section>
+        <h2>M03: KILLED</h2>
+        <p>Original: <code>return 10</code></p>
+        <p>Mutated: <code>return 0</code></p>
+        <details>
+            <summary>View test output</summary>
+            <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">test_exact_threshold (test_shipping.TestShippingFee.test_exact_threshold) ... ok
+test_just_below_threshold (test_shipping.TestShippingFee.test_just_below_threshold) ... FAIL
+test_large_order (test_shipping.TestShippingFee.test_large_order) ... ok
+test_small_order (test_shipping.TestShippingFee.test_small_order) ... FAIL
+
+======================================================================
+FAIL: test_just_below_threshold (test_shipping.TestShippingFee.test_just_below_threshold)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-a39a4zqw\test_shipping.py&quot;, line 17, in test_just_below_threshold
+    self.assertEqual(shipping_fee(99), 10)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 10
+
+======================================================================
+FAIL: test_small_order (test_shipping.TestShippingFee.test_small_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;C:\Users\klrav\AppData\Local\Temp\testskeptic-a39a4zqw\test_shipping.py&quot;, line 8, in test_small_order
+    self.assertEqual(shipping_fee(50), 10)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 10
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=2)
+</pre>
+        </details>
+    </section>
+    
+
+    <hr>
+    <p>Each mutation was tested independently against the same test suite.</p>
+    <p>Scope: the included shipping example and three predefined mutations.</p>
+    <p>These results are not an overall software correctness score.</p>
+</body>
+</html>

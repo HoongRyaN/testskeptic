@@ -61,34 +61,78 @@ if baseline != "PASS":
 source_path = ROOT / "shipping.py"
 source = source_path.read_text(encoding="utf-8")
 
-original = "subtotal >= 100"
-replacement = "subtotal > 100"
+mutations = [
+    {
+        "id": "M01",
+        "original": "subtotal >= 100",
+        "replacement": "subtotal > 100",
+    },
+    {
+        "id": "M02",
+        "original": "subtotal >= 100",
+        "replacement": "subtotal >= 99",
+    },
+    {
+        "id": "M03",
+        "original": "return 10",
+        "replacement": "return 0",
+    },
+]
 
-if source.count(original) != 1:
-    raise SystemExit("STOP: expected exactly one mutation target.")
+results = []
 
-print("Testing a mutated copy...")
+for mutation in mutations:
+    original = mutation["original"]
+    replacement = mutation["replacement"]
 
-with tempfile.TemporaryDirectory(prefix="testskeptic-") as temprary:
-    folder = Path(temprary)
-    shutil.copy2(ROOT / "test_shipping.py", folder / "test_shipping.py")
+    print("Testing mutation:", mutation["id"])
 
-    mutated = source.replace(original, replacement, 1)
-    (folder / "shipping.py").write_text(mutated, encoding="utf-8")
+    if source.count(original) != 1:
+        status = "ERROR"
+        mutation_output = "Expected exactly one mutation target."
+    else:
+        with tempfile.TemporaryDirectory(prefix="testskeptic-") as temporary:
+            folder = Path(temporary)
+            shutil.copy2(ROOT / "test_shipping.py", folder / "test_shipping.py")
 
-    status, mutation_output = run_tests(folder)
+            mutated = source.replace(original, replacement, 1)
+            (folder / "shipping.py").write_text(mutated, encoding="utf-8")
 
-if status == "PASS":
-    verdict = "SURVIVED"
-    summary = "Tests missed the changed behavior."
-elif status == "FAIL":
-    verdict = "KILLED"
-    summary = "Tests detected the changed behavior."
-else:
-    verdict = "INVALID"
-    summary = "Execution failed; do not count this as detection."
+            status, mutation_output = run_tests(folder)
 
-print(f"{verdict}: {summary}")
+    verdict = {
+        "PASS": "SURVIVED",
+        "FAIL": "KILLED",
+        "ERROR": "INVALID",
+    }[status]
+
+    print(mutation["id"], verdict)
+
+    results.append({
+        "id": mutation["id"],
+        "original": original,
+        "replacement": replacement,
+        "verdict": verdict,
+        "output": mutation_output,
+    })
+
+sections = ""
+verdicts = []
+
+for result in results:
+    verdicts.append(result["verdict"])
+
+    sections += f"""
+    <section>
+        <h2>{escape(result["id"])}: {escape(result["verdict"])}</h2>
+        <p>Original: <code>{escape(result["original"])}</code></p>
+        <p>Mutated: <code>{escape(result["replacement"])}</code></p>
+        <details>
+            <summary>View test output</summary>
+            <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">{escape(result["output"])}</pre>
+        </details>
+    </section>
+    """
 
 generated_at = datetime.now().astimezone().isoformat(timespec="seconds")
 
@@ -108,26 +152,27 @@ report = f"""<!doctype html>
 </head>
 <body style="font-family: sans-serif; max-width: 960px; margin: 40px auto; padding: 0 20px; line-height: 1.6;">
     <h1>TestSkeptic</h1>
-    <p>Single-mutation test report</p>
+    <p>Controlled mutation test report</p>
     <p>Generated: {escape(generated_at)}</p>
 
-    <h2>Result: {escape(verdict)}</h2>
-    <p>{escape(summary)}</p>
+    <h2>Summary</h2>
     <p>Original test status: <strong>{escape(baseline)}</strong></p>
-
-    <h2>Controlled mutation</h2>
-    <p>Original: <code>{escape(original)}</code></p>
-    <p>Mutated: <code>{escape(replacement)}</code></p>
+    <ul>
+        <li>Total mutations: {len(results)}</li>
+        <li>KILLED: {verdicts.count("KILLED")}</li>
+        <li>SURVIVED: {verdicts.count("SURVIVED")}</li>
+        <li>INVALID: {verdicts.count("INVALID")}</li>
+    </ul>
 
     <h2>Original test run</h2>
     <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">{escape(baseline_output)}</pre>
 
-    <h2>Mutated test run</h2>
-    <pre style="background: #f3f4f6; padding: 16px; overflow-x: auto;">{escape(mutation_output)}</pre>
+    {sections}
 
     <hr>
-    <p>Scope: the included shipping example and one predifined mutation.</p>
-    <p>This result is not an overall software correctness score.</p>
+    <p>Each mutation was tested independently against the same test suite.</p>
+    <p>Scope: the included shipping example and three predefined mutations.</p>
+    <p>These results are not an overall software correctness score.</p>
 </body>
 </html>
 """

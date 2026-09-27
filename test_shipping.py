@@ -12,3 +12,6 @@ class TestShippingFee(unittest.TestCase):
 
     def test_exact_threshold(self):
         self.assertEqual(shipping_fee(100), 0)
+
+    def test_just_below_threshold(self):
+        self.assertEqual(shipping_fee(99), 10)
